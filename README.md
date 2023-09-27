@@ -45,8 +45,7 @@ import { createServer } from "node:http";
 import { createProxyServer } from "@squarecloud/http-proxy";
 
 const proxy = createProxyServer({});
-const target =
-  "http://google.com/example"; /* address of your proxy server here */
+const target = "http://example.com"; /* address of your proxy server here */
 
 const server = createServer(async (req, res) => {
   try {
@@ -58,9 +57,7 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(80, () =>
-  console.log("Proxy is listening on http://localhost:80"),
-);
+server.listen(80, () => console.log("Proxy is listening on http://localhost"));
 ```
 
 Checkout [http-party/node-http-proxy](https://github.com/http-party/node-http-proxy) for more options and examples.
