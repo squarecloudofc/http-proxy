@@ -1,4 +1,4 @@
-# 🔀 @squarecloud/http-proxy
+# @squarecloud/http-proxy
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -45,7 +45,7 @@ import { createServer } from "node:http";
 import { createProxyServer } from "@squarecloud/http-proxy";
 
 const proxy = createProxyServer({});
-const target = /* address of your proxy server here */
+const target = "http://google.com/example" /* address of your proxy server here */
 
 const server = createServer(async (req, res) => {
   try {
@@ -71,10 +71,9 @@ Checkout [http-party/node-http-proxy](https://github.com/http-party/node-http-pr
 
 ## License
 
-Made with 💙
-Fund by [Square Cloud | A hosting company](https://squarecloud.app).
-
 Published under [MIT License](./LICENSE).
+
+Made with 💙 & Supported  by [Square Cloud | A hosting company](https://squarecloud.app).
 
 <!-- Badges -->
 
