@@ -8,14 +8,14 @@ A Full-Featured HTTP and WebSocket Proxy for Node.js forked from [http-party/nod
 
 This fork adds the following features:
 
--   Dependencies updates & security fixes.
--   Websocket close before response fixed.
--   Add support for Lookup option. Remove old followRedirects option.
--   Support for modifying content of websocket streams.
--   Respect NODE_TLS_REJECT_UNAUTHORIZED environment variable.
--   Fix for issues when using an Agent, fix the type error when req.socket is undefined.
--   Fixed bug when http:/ isn't replaced with: http://
--   Fixed X-Forwarded-\* not capitalized.
+- Dependencies updates & security fixes.
+- Websocket close before response fixed.
+- Add support for Lookup option. Remove old followRedirects option.
+- Support for modifying content of websocket streams.
+- Respect NODE_TLS_REJECT_UNAUTHORIZED environment variable.
+- Fix for issues when using an Agent, fix the type error when req.socket is undefined.
+- Fixed bug when http:/ isn't replaced with: http://
+- Fixed X-Forwarded-\* not capitalized.
 
 Inspired by the project [Ambassify project](https://github.com/ambassify/node-http-proxy).
 
@@ -45,7 +45,8 @@ import { createServer } from "node:http";
 import { createProxyServer } from "@squarecloud/http-proxy";
 
 const proxy = createProxyServer({});
-const target = "http://google.com/example" /* address of your proxy server here */
+const target =
+  "http://google.com/example"; /* address of your proxy server here */
 
 const server = createServer(async (req, res) => {
   try {
@@ -57,23 +58,25 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(80, () => console.log("Proxy is listening on http://localhost:80"));
+server.listen(80, () =>
+  console.log("Proxy is listening on http://localhost:80"),
+);
 ```
 
 Checkout [http-party/node-http-proxy](https://github.com/http-party/node-http-proxy) for more options and examples.
 
 ## Development
 
--   Clone this repository
--   Install latest LTS version of [Node.js](https://nodejs.org/en/)
--   Install dependencies using `npm install`
--   Run interactive tests using `npm run test`
+- Clone this repository
+- Install latest LTS version of [Node.js](https://nodejs.org/en/)
+- Install dependencies using `npm install`
+- Run interactive tests using `npm run test`
 
 ## License
 
 Published under [MIT License](./LICENSE).
 
-Made with 💙 & Supported  by [Square Cloud | A hosting company](https://squarecloud.app).
+Made with 💙 & Supported by [Square Cloud | A hosting company](https://squarecloud.app).
 
 <!-- Badges -->
 

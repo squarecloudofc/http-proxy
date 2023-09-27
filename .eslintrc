@@ -1,0 +1,3 @@
+{
+    "extends": "@squarecloud/eslint-config/node.cjs"
+}
