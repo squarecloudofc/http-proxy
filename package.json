@@ -1,0 +1,39 @@
+{
+    "name": "@squarecloud/http-proxy",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "hhttps://github.com/squarecloudofc/http-proxy.git"
+    },
+    "description": "HTTP proxying for the masses",
+    "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+    "maintainers": [
+        "João Otávio <joao@squarecloud.app>"
+    ],
+    "main": "index.js",
+    "dependencies": {
+        "eventemitter3": "^5.0.1"
+    },
+    "devDependencies": {
+        "async": "^3.2.4",
+        "concat-stream": "^2.0.0",
+        "prettier": "^3.0.3",
+        "expect.js": "~0.3.1",
+        "mocha": "^10.2.0",
+        "nyc": "^15.1.0",
+        "semver": "^7.5.4",
+        "socket.io": "^4.7.2",
+        "socket.io-client": "^4.7.2",
+        "sse": "^0.0.8",
+        "ws": "^8.14.1"
+    },
+    "scripts": {
+        "prettier": "prettier --write .",
+        "mocha": "mocha --exit test/*-test.js",
+        "test": "nyc --reporter=text --reporter=lcov npm run mocha"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "license": "MIT"
+}
