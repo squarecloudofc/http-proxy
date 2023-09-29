@@ -39,28 +39,62 @@ bun install @squarecloud/http-proxy
 
 Create proxy:
 
-```ts
-import { createServer } from "node:http";
-
-import { createProxyServer } from "@squarecloud/http-proxy";
+```js
+const { createServer } = require("node:http");
+const { createProxyServer } = require("@squarecloud/http-proxy");
 
 const proxy = createProxyServer({});
 const target = "http://example.com"; /* address of your proxy server here */
 
 const server = createServer(async (req, res) => {
-  try {
-    await proxy.web(req, res, { target });
-  } catch (error) {
-    console.error(error);
-    res.statusCode = 500;
-    res.end("Proxy error: " + error.toString());
-  }
+    try {
+        await proxy.web(req, res, { target });
+    } catch (error) {
+        console.error(error);
+        res.statusCode = 500;
+        res.end("Proxy error: " + error.toString());
+    }
 });
 
 server.listen(80, () => console.log("Proxy is listening on http://localhost"));
 ```
 
-Checkout [http-party/node-http-proxy](https://github.com/http-party/node-http-proxy) for more options and examples.
+Example with WebSocket:
+
+```js
+const { createServer } = require("node:http");
+const { createProxyServer } = require("@squarecloud/http-proxy");
+
+const proxy = createProxyServer({ ws: true });
+const target = "ws://example.com"; /* address of your proxy server here */
+
+const server = createServer(async (req, res) => { /* ... */ });
+
+server.on("upgrade", async (req, socket, head) => {
+    try {
+        // use proxy.ws() instead of proxy.web() for proxying WebSocket requests.
+        await proxy.ws(req, socket, head, { target });
+    } catch (error) {
+        console.error(error);
+        socket.end();
+    }
+});
+
+server.listen(80, () => console.log("Proxy is listening on http://localhost"));
+```
+
+Some options:
+
+```js
+// Options most used in the proxy configuration:
+// * ws     : <true/false, if you want to proxy websockets>
+// * xfwd   : <true/false, adds X-Forward headers>
+// * secure : <true/false, verify SSL certificate>
+// * prependPath: <true/false, Default: true - specify whether you want to prepend the target"s path to the proxy path>
+// * ignorePath: <true/false, Default: false - specify whether you want to ignore the proxy path of the incoming request>
+```
+
+Checkout [http-party/node-http-proxy](https://github.com/http-party/node-http-proxy#options) for more options and examples.
 
 ## Development
 
