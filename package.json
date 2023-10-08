@@ -1,6 +1,6 @@
 {
   "name": "@squarecloud/http-proxy",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/squarecloudofc/http-proxy.git"
@@ -18,7 +18,7 @@
     "@squarecloud/eslint-config": "latest",
     "async": "^3.2.4",
     "concat-stream": "^2.0.0",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "expect.js": "~0.3.1",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
