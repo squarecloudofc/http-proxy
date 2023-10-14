@@ -444,4 +444,22 @@ describe("lib/http-proxy/passes/web-outgoing.js", function () {
 
     expect(proxyRes.headers["transfer-encoding"]).to.eql(undefined);
   });
+
+  describe("#chunkedHeader", function () {
+    const proxyRes = {
+      headers: {
+        "transfer-encoding": "chunked",
+      },
+    };
+    let b = false;
+    const res = {
+      flushHeaders: () => {
+        b = true;
+      },
+    };
+
+    httpProxy.chunkedResponse({}, res, proxyRes);
+
+    expect(b).to.eql(true);
+  });
 });
