@@ -92,6 +92,7 @@ Some options:
 // * secure : <true/false, verify SSL certificate>
 // * prependPath: <true/false, Default: true - specify whether you want to prepend the target"s path to the proxy path>
 // * ignorePath: <true/false, Default: false - specify whether you want to ignore the proxy path of the incoming request>
+// * proxyTimeoutCustomError: true/false, default: false - specify whether you want to throw a custom `ETIMEDOUT` error when the `proxyTimeout` is reached. If false then the default `ECONNRESET` error will be thrown.
 ```
 
 Checkout [http-party/node-http-proxy](https://github.com/http-party/node-http-proxy#options) for more options and examples.
