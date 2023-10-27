@@ -1,6 +1,6 @@
 {
   "name": "@squarecloud/http-proxy",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/squarecloudofc/http-proxy.git"
@@ -11,9 +11,6 @@
     "João Otávio <joao@squarecloud.app>"
   ],
   "main": "index.js",
-  "dependencies": {
-    "eventemitter3": "^5.0.1"
-  },
   "devDependencies": {
     "@squarecloud/eslint-config": "latest",
     "async": "^3.2.4",
@@ -29,12 +26,11 @@
     "ws": "^8.14.1"
   },
   "scripts": {
-    "eslint": "eslint --fix .",
-    "mocha": "mocha --exit test/*-test.js",
-    "test": "nyc --reporter=text --reporter=lcov npm run mocha"
+    "test": "mocha --exit test/*-test.js",
+    "eslint": "eslint --fix ."
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "license": "MIT"
 }
