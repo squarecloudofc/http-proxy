@@ -138,13 +138,7 @@ describe("lib/http-proxy/common.js", function () {
 
     it("should set the agent to false if none is given", function () {
       const outgoing = {};
-      common.setupOutgoing(
-        outgoing,
-        {
-          target: "http://localhost",
-        },
-        { url: "/" },
-      );
+      common.setupOutgoing(outgoing, { target: "http://localhost" }, { url: "/" });
       expect(outgoing.agent).to.eql(false);
     });
 
@@ -182,13 +176,7 @@ describe("lib/http-proxy/common.js", function () {
 
     it("should keep the original target path in the outgoing path", function () {
       const outgoing = {};
-      common.setupOutgoing(
-        outgoing,
-        {
-          target: { path: "some-path" },
-        },
-        { url: "am" },
-      );
+      common.setupOutgoing(outgoing, { target: { path: "some-path" } }, { url: "am" });
 
       expect(outgoing.path).to.eql("some-path/am");
     });
@@ -350,7 +338,7 @@ describe("lib/http-proxy/common.js", function () {
     });
 
     describe("when using changeOrigin", function () {
-      it("should correctly set the port to the host when it is a non-standard port using new URL", function () {
+      it("should correctly set the port to the host when it is a non-standard port using url.parse", function () {
         const outgoing = {};
         const myEndpoint = "https://myCouch.com:6984";
         common.setupOutgoing(
@@ -432,16 +420,10 @@ describe("lib/http-proxy/common.js", function () {
       expect(outgoing.method).eql("POST");
     });
 
-    // new URL("").path => null
+    // new URL('').path => null
     it("should not pass null as last arg to #urlJoin", function () {
       const outgoing = {};
-      common.setupOutgoing(
-        outgoing,
-        {
-          target: { path: "" },
-        },
-        { url: "" },
-      );
+      common.setupOutgoing(outgoing, { target: { path: "" } }, { url: "" });
 
       expect(outgoing.path).to.be("");
     });

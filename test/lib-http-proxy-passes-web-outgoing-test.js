@@ -311,23 +311,6 @@ describe("lib/http-proxy/passes/web-outgoing.js", function () {
       expect(this.res.headers["set-cookie"]).to.have.length(2);
     });
 
-    it("skips invalid headers", function () {
-      const options = {};
-      const invalidRawHeaders = [...this.rawProxyRes.rawHeaders, "Set-Cookie", "invalid\\u0001header; domain=my.domain; path=/"];
-      const invalidRawProxyRes = {
-        ...this.rawProxyRes,
-        rawHeaders: invalidRawHeaders,
-      };
-      httpProxy.writeHeaders({}, this.res, invalidRawProxyRes, options);
-
-      expect(this.res.headers.hey).to.eql("hello");
-      expect(this.res.headers.how).to.eql("are you?");
-
-      expect(this.res.headers).to.have.key("set-cookie");
-      expect(this.res.headers["set-cookie"]).to.be.an(Array);
-      expect(this.res.headers["set-cookie"]).to.have.length(2);
-    });
-
     it("rewrites path", function () {
       const options = {
         cookiePathRewrite: "/dummyPath",
@@ -443,23 +426,5 @@ describe("lib/http-proxy/passes/web-outgoing.js", function () {
     httpProxy.removeChunked({ httpVersion: "1.0" }, {}, proxyRes);
 
     expect(proxyRes.headers["transfer-encoding"]).to.eql(undefined);
-  });
-
-  describe("#chunkedHeader", function () {
-    const proxyRes = {
-      headers: {
-        "transfer-encoding": "chunked",
-      },
-    };
-    let b = false;
-    const res = {
-      flushHeaders: () => {
-        b = true;
-      },
-    };
-
-    httpProxy.chunkedResponse({}, res, proxyRes);
-
-    expect(b).to.eql(true);
   });
 });

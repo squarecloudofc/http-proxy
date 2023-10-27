@@ -1,14 +1,13 @@
 /* eslint-disable no-undef */
 const httpProxy = require("../lib/http-proxy");
-const expect = require("expect.js");
-const { randomBytes } = require("crypto");
-const http = require("http");
-const net = require("net");
-const ws = require("ws");
-const io = require("socket.io");
-const SSE = require("sse");
+const { randomBytes } = require("node:crypto");
 const ioClient = require("socket.io-client");
-
+const expect = require("expect.js");
+const http = require("node:http");
+const net = require("node:net");
+const io = require("socket.io");
+const ws = require("ws");
+const SSE = require("sse");
 //
 // Expose a port number generator.
 // thanks to @3rd-Eden
@@ -54,7 +53,7 @@ describe("lib/http-proxy.js", function () {
         })
         .listen(ports.proxy);
 
-      const source = http.createServer(function (req) {
+      const source = http.createServer(function (req, res) {
         expect(req.method).to.eql("GET");
         expect(req.headers.host.split(":")[1]).to.eql(ports.proxy);
         source.close();
@@ -63,7 +62,7 @@ describe("lib/http-proxy.js", function () {
       });
 
       source.listen(ports.source);
-      http.request("http://127.0.0.1:" + ports.proxy, function () {}).end();
+      http.request("http://127.0.0.1:" + ports.proxy, function () { }).end();
     });
   });
 
@@ -131,10 +130,10 @@ describe("lib/http-proxy.js", function () {
             port: ports.proxy,
             method: "POST",
             headers: {
-              "x-forwarded-for": "127.0.0.1",
+              "X-Forwarded-for": "127.0.0.1",
             },
           },
-          function () {},
+          function () { },
         )
         .end();
     });
@@ -212,7 +211,7 @@ describe("lib/http-proxy.js", function () {
             port: ports.proxy,
             method: "GET",
           },
-          function () {},
+          function () { },
         )
         .end();
     });
@@ -248,7 +247,7 @@ describe("lib/http-proxy.js", function () {
           port: ports.proxy,
           method: "GET",
         },
-        function () {},
+        function () { },
       );
 
       testReq.on("error", function (e) {
@@ -283,14 +282,72 @@ describe("lib/http-proxy.js", function () {
 
       source.listen(ports.source);
 
-      const socket = net.connect({ port: ports.proxy }, () => socket.write("GET / HTTP/1.0\r\n\r\n"));
+      const socket = net.connect({ port: ports.proxy }, function () {
+        socket.write("GET / HTTP/1.0\r\n\r\n");
+      });
 
       // handle errors
-      socket.on("data", () => socket.end());
-      socket.on("error", () => expect.fail("Unexpected socket error"));
-      socket.on("end", () => expect("Socket to finish").to.be.ok());
+      socket.on("error", function () {
+        expect.fail("Unexpected socket error");
+      });
+
+      socket.on("data", function (data) {
+        socket.end();
+      });
+
+      socket.on("end", function () {
+        expect("Socket to finish").to.be.ok();
+      });
+
+      //      http.request('http://127.0.0.1:' + ports.proxy, function() {}).end();
     });
   });
+
+  // describe('#createProxyServer using the web-incoming passes', function () {
+  //   it('should emit events correctly', function(done) {
+  //     var proxy = httpProxy.createProxyServer({
+  //       target: 'http://127.0.0.1:8080'
+  //     }),
+
+  //     proxyServer = proxy.listen('8081'),
+
+  //     source = http.createServer(function(req, res) {
+  //       expect(req.method).to.eql('GET');
+  //       expect(req.headers.host.split(':')[1]).to.eql('8081');
+  //       res.writeHead(200, {'Content-Type': 'text/plain'})
+  //       res.end('Hello from ' + source.address().port);
+  //     }),
+
+  //     events = [];
+
+  //     source.listen('8080');
+
+  //     proxy.ee.on('http-proxy:**', function (uno, dos, tres) {
+  //       events.push(this.event);
+  //     })
+
+  //     http.request({
+  //       hostname: '127.0.0.1',
+  //       port: '8081',
+  //       method: 'GET',
+  //     }, function(res) {
+  //       expect(res.statusCode).to.eql(200);
+
+  //       res.on('data', function (data) {
+  //         expect(data.toString()).to.eql('Hello from 8080');
+  //       });
+
+  //       res.on('end', function () {
+  //         expect(events).to.contain('http-proxy:outgoing:web:begin');
+  //         expect(events).to.contain('http-proxy:outgoing:web:end');
+  //         source.close();
+  //         proxyServer.close();
+  //         done();
+  //       });
+  //     }).end();
+  //   });
+  // });
+
   describe("#createProxyServer using the ws-incoming passes", function () {
     it("should proxy the websockets stream", function (done) {
       const ports = { source: gen.port, proxy: gen.port };
@@ -326,7 +383,7 @@ describe("lib/http-proxy.js", function () {
     it("should emit error on proxy error", function (done) {
       const ports = { source: gen.port, proxy: gen.port };
       const proxy = httpProxy.createProxyServer({
-        // note: we don"t ever listen on this port
+        // note: we don't ever listen on this port
         target: "ws://127.0.0.1:" + ports.source,
         ws: true,
       });
@@ -368,7 +425,7 @@ describe("lib/http-proxy.js", function () {
       server.listen(ports.source);
 
       const proxy = httpProxy.createProxyServer({
-        // note: we don"t ever listen on this port
+        // note: we don't ever listen on this port
         target: "ws://127.0.0.1:" + ports.source,
         ws: true,
       });
@@ -432,10 +489,10 @@ describe("lib/http-proxy.js", function () {
       const destiny = new io.Server(server);
 
       function startSocketIo() {
-        const client = ioClient.connect("ws://127.0.0.1:" + ports.proxy, {
-          rejectUnauthorized: null,
+        const client = ioClient.connect("ws://127.0.0.1:" + ports.proxy, { rejectUnauthorized: null });
+        client.on("connect", function () {
+          client.disconnect();
         });
-        client.on("connect", client.disconnect);
       }
       let count = 0;
 
@@ -496,7 +553,6 @@ describe("lib/http-proxy.js", function () {
 
     it("should detect a proxyReq event and modify headers", function (done) {
       const ports = { source: gen.port, proxy: gen.port };
-
       const proxy = httpProxy.createProxyServer({
         target: "ws://127.0.0.1:" + ports.source,
         ws: true,
@@ -511,7 +567,9 @@ describe("lib/http-proxy.js", function () {
       const destiny = new ws.Server({ port: ports.source }, function () {
         const client = new ws("ws://127.0.0.1:" + ports.proxy);
 
-        client.on("open", () => client.send("hello there"));
+        client.on("open", function () {
+          client.send("hello there");
+        });
 
         client.on("message", function (msg) {
           expect(msg.toString()).to.be("Hello over websockets");
@@ -527,6 +585,70 @@ describe("lib/http-proxy.js", function () {
 
         socket.on("message", function (msg) {
           expect(msg.toString()).to.be("hello there");
+          socket.send("Hello over websockets");
+        });
+      });
+    });
+
+    it("should forward frames with single frame payload (including on node 4.x)", function (done) {
+      const payload = Array(65529).join("0");
+      const ports = { source: gen.port, proxy: gen.port };
+      const proxy = httpProxy.createProxyServer({
+        target: "ws://127.0.0.1:" + ports.source,
+        ws: true,
+      });
+      const proxyServer = proxy.listen(ports.proxy);
+      const destiny = new ws.Server({ port: ports.source }, function () {
+        const client = new ws("ws://127.0.0.1:" + ports.proxy);
+
+        client.on("open", function () {
+          client.send(payload);
+        });
+
+        client.on("message", function (msg) {
+          expect(msg.toString()).to.be("Hello over websockets");
+          client.close();
+          proxyServer.close();
+          destiny.close();
+          done();
+        });
+      });
+
+      destiny.on("connection", function (socket) {
+        socket.on("message", function (msg) {
+          expect(msg.toString()).to.be(payload);
+          socket.send("Hello over websockets");
+        });
+      });
+    });
+
+    it("should forward continuation frames with big payload (including on node 4.x)", function (done) {
+      const payload = Array(65530).join("0");
+      const ports = { source: gen.port, proxy: gen.port };
+      const proxy = httpProxy.createProxyServer({
+        target: "ws://127.0.0.1:" + ports.source,
+        ws: true,
+      });
+      const proxyServer = proxy.listen(ports.proxy);
+      const destiny = new ws.Server({ port: ports.source }, function () {
+        const client = new ws("ws://127.0.0.1:" + ports.proxy);
+
+        client.on("open", function () {
+          client.send(payload);
+        });
+
+        client.on("message", function (msg) {
+          expect(msg.toString()).to.be("Hello over websockets");
+          client.close();
+          proxyServer.close();
+          destiny.close();
+          done();
+        });
+      });
+
+      destiny.on("connection", function (socket) {
+        socket.on("message", function (msg) {
+          expect(msg.toString()).to.be(payload);
           socket.send("Hello over websockets");
         });
       });
