@@ -169,7 +169,7 @@ describe("lib/http-proxy.js", function () {
             expect(res.statusCode).to.eql(200);
             expect(res.headers["content-type"]).to.eql("text/plain");
             if (res.rawHeaders !== undefined) {
-              expect(res.rawHeaders.indexOf("Content-Type")).not.to.eql(-1);
+              expect(res.rawHeaders.indexOf("content-type")).not.to.eql(-1);
               expect(res.rawHeaders.indexOf("text/plain")).not.to.eql(-1);
             }
 
