@@ -10,6 +10,7 @@ This fork adds the following features:
 
 - Dependencies updates & security fixes.
 - Websocket close before response fixed.
+- Memory leak fixed when client closes prematurely.
 - Add support for Lookup option. Remove old followRedirects option.
 - Support for modifying content of websocket streams.
 - Respect NODE_TLS_REJECT_UNAUTHORIZED environment variable.
