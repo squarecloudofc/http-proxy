@@ -2,8 +2,8 @@
 const httpProxy = require("../lib/http-proxy/passes/web-outgoing");
 const expect = require("expect.js");
 
-describe("lib/http-proxy/passes/web-outgoing.js", function () {
-  describe("#setRedirectHostRewrite", function () {
+describe("lib/http-proxy/passes/web-outgoing.js", () => {
+  describe("#setRedirectHostRewrite", () => {
     beforeEach(function () {
       this.req = {
         headers: {
