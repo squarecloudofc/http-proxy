@@ -2,16 +2,16 @@
 const httpProxy = require("../lib/http-proxy/passes/ws-incoming");
 const expect = require("expect.js");
 
-describe("lib/http-proxy/passes/ws-incoming.js", function () {
-  describe("#checkMethodAndHeader", function () {
-    it("should drop non-GET connections", function () {
+describe("lib/http-proxy/passes/ws-incoming.js", () => {
+  describe("#checkMethodAndHeader", () => {
+    it("should drop non-GET connections", () => {
       let destroyCalled = false;
       const stubRequest = {
         method: "DELETE",
         headers: {},
       };
       const stubSocket = {
-        destroy: function () {
+        destroy: () => {
           // Simulate Socket.destroy() method when call
           destroyCalled = true;
         },
@@ -21,14 +21,14 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
       expect(destroyCalled).to.be(true);
     });
 
-    it("should drop connections when no upgrade header", function () {
+    it("should drop connections when no upgrade header", () => {
       let destroyCalled = false;
       const stubRequest = {
         method: "GET",
         headers: {},
       };
       const stubSocket = {
-        destroy: function () {
+        destroy: () => {
           // Simulate Socket.destroy() method when call
           destroyCalled = true;
         },
@@ -38,7 +38,7 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
       expect(destroyCalled).to.be(true);
     });
 
-    it("should drop connections when upgrade header is different of `websocket`", function () {
+    it("should drop connections when upgrade header is different of `websocket`", () => {
       let destroyCalled = false;
       const stubRequest = {
         method: "GET",
@@ -47,7 +47,7 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
         },
       };
       const stubSocket = {
-        destroy: function () {
+        destroy: () => {
           // Simulate Socket.destroy() method when call
           destroyCalled = true;
         },
@@ -57,7 +57,7 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
       expect(destroyCalled).to.be(true);
     });
 
-    it("should return nothing when all is ok", function () {
+    it("should return nothing when all is ok", () => {
       let destroyCalled = false;
       const stubRequest = {
         method: "GET",
@@ -66,7 +66,7 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
         },
       };
       const stubSocket = {
-        destroy: function () {
+        destroy: () => {
           // Simulate Socket.destroy() method when call
           destroyCalled = true;
         },
@@ -77,13 +77,13 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
     });
   });
 
-  describe("#XHeaders", function () {
-    it("return if no forward request", function () {
+  describe("#XHeaders", () => {
+    it("return if no forward request", () => {
       const returnValue = httpProxy.XHeaders({}, {}, {});
       expect(returnValue).to.be(undefined);
     });
 
-    it("set the correct X-Forwarded-* headers from req.connection", function () {
+    it("set the correct X-Forwarded-* headers from req.connection", () => {
       const stubRequest = {
         connection: {
           remoteAddress: "192.168.1.2",
@@ -99,7 +99,7 @@ describe("lib/http-proxy/passes/ws-incoming.js", function () {
       expect(stubRequest.headers["X-Forwarded-Proto"]).to.be("ws");
     });
 
-    it("set the correct X-Forwarded-* headers from req.socket", function () {
+    it("set the correct X-Forwarded-* headers from req.socket", () => {
       const stubRequest = {
         socket: {
           remoteAddress: "192.168.1.3",

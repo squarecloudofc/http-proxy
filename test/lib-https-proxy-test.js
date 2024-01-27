@@ -17,9 +17,9 @@ Object.defineProperty(gen, "port", {
   },
 });
 
-describe("lib/http-proxy.js", function () {
-  describe("HTTPS #createProxyServer", function () {
-    describe("HTTPS to HTTP", function () {
+describe("lib/http-proxy.js", () => {
+  describe("HTTPS #createProxyServer", () => {
+    describe("HTTPS to HTTP", () => {
       it("should proxy the request en send back the response", function (done) {
         const ports = { source: gen.port, proxy: gen.port };
         const source = http.createServer(function (req, res) {
@@ -58,7 +58,7 @@ describe("lib/http-proxy.js", function () {
                 expect(data.toString()).to.eql("Hello from " + ports.source);
               });
 
-              res.on("end", function () {
+              res.once("end", () => {
                 source.close();
                 proxy.close();
                 done();
@@ -68,7 +68,7 @@ describe("lib/http-proxy.js", function () {
           .end();
       });
     });
-    describe("HTTPS not allow SSL self-signed", function () {
+    describe("HTTPS not allow SSL self-signed", () => {
       it("should fail with error", function (done) {
         const ports = { source: gen.port, proxy: gen.port };
         https
@@ -101,7 +101,7 @@ describe("lib/http-proxy.js", function () {
           .end();
       });
     });
-    describe("HTTPS to HTTP using own server", function () {
+    describe("HTTPS to HTTP using own server", () => {
       it("should proxy the request en send back the response", function (done) {
         const ports = { source: gen.port, proxy: gen.port };
         const source = http.createServer(function (req, res) {
@@ -148,7 +148,7 @@ describe("lib/http-proxy.js", function () {
                 expect(data.toString()).to.eql("Hello from " + ports.source);
               });
 
-              res.on("end", function () {
+              res.once("end", () => {
                 source.close();
                 ownServer.close();
                 done();

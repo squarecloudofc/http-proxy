@@ -1,14 +1,12 @@
 /* eslint-disable no-undef */
 const webPasses = require("../lib/http-proxy/passes/web-incoming");
 const httpProxy = require("../lib/http-proxy");
-const concat = require("concat-stream");
 const expect = require("expect.js");
 const http = require("node:http");
-const async = require("async");
 
-describe("lib/http-proxy/passes/web.js", function () {
-  describe("#deleteLength", function () {
-    it("should change `content-length` for DELETE requests", function () {
+describe("lib/http-proxy/passes/web.js", () => {
+  describe("#deleteLength", () => {
+    it("should change `content-length` for DELETE requests", () => {
       const stubRequest = {
         method: "DELETE",
         headers: {},
@@ -17,7 +15,7 @@ describe("lib/http-proxy/passes/web.js", function () {
       expect(stubRequest.headers["content-length"]).to.eql("0");
     });
 
-    it("should change `content-length` for OPTIONS requests", function () {
+    it("should change `content-length` for OPTIONS requests", () => {
       const stubRequest = {
         method: "OPTIONS",
         headers: {},
@@ -26,7 +24,7 @@ describe("lib/http-proxy/passes/web.js", function () {
       expect(stubRequest.headers["content-length"]).to.eql("0");
     });
 
-    it("should remove `transfer-encoding` from empty DELETE requests", function () {
+    it("should remove `transfer-encoding` from empty DELETE requests", () => {
       const stubRequest = {
         method: "DELETE",
         headers: {
@@ -39,8 +37,8 @@ describe("lib/http-proxy/passes/web.js", function () {
     });
   });
 
-  describe("#timeout", function () {
-    it("should set timeout on the socket", function () {
+  describe("#timeout", () => {
+    it("should set timeout on the socket", () => {
       let done = false;
       const stubRequest = {
         socket: {
@@ -55,7 +53,7 @@ describe("lib/http-proxy/passes/web.js", function () {
     });
   });
 
-  describe("#XHeaders", function () {
+  describe("#XHeaders", () => {
     const stubRequest = {
       connection: {
         remoteAddress: "192.168.1.2",
@@ -66,7 +64,7 @@ describe("lib/http-proxy/passes/web.js", function () {
       },
     };
 
-    it("set the correct X-Forwarded-* headers", function () {
+    it("set the correct X-Forwarded-* headers", () => {
       webPasses.XHeaders(stubRequest, {}, { xfwd: true });
       expect(stubRequest.headers["X-Forwarded-For"]).to.be("192.168.1.2");
       expect(stubRequest.headers["X-Forwarded-Port"]).to.be(8080);
@@ -75,7 +73,7 @@ describe("lib/http-proxy/passes/web.js", function () {
   });
 });
 
-describe("#createProxyServer.web() using own http server", function () {
+describe("#createProxyServer.web() using own http server", () => {
   it("should proxy the request using the web proxy handler", function (done) {
     const proxy = httpProxy.createProxyServer({
       target: "http://127.0.0.1:8080",
@@ -98,7 +96,7 @@ describe("#createProxyServer.web() using own http server", function () {
     proxyServer.listen("8081");
     source.listen("8080");
 
-    http.request("http://127.0.0.1:8081", function () {}).end();
+    http.request("http://127.0.0.1:8081", () => {}).end();
   });
 
   it("should detect a proxyReq event and modify headers", function (done) {
@@ -126,7 +124,7 @@ describe("#createProxyServer.web() using own http server", function () {
     proxyServer.listen("8081");
     source.listen("8080");
 
-    http.request("http://127.0.0.1:8081", function () {}).end();
+    http.request("http://127.0.0.1:8081", () => {}).end();
   });
 
   it("should proxy the request and handle error via callback", function (done) {
@@ -154,7 +152,7 @@ describe("#createProxyServer.web() using own http server", function () {
           port: "8082",
           method: "GET",
         },
-        function () {},
+        () => {},
       )
       .end();
   });
@@ -188,7 +186,7 @@ describe("#createProxyServer.web() using own http server", function () {
           port: "8083",
           method: "GET",
         },
-        function () {},
+        () => {},
       )
       .end();
   });
@@ -222,7 +220,7 @@ describe("#createProxyServer.web() using own http server", function () {
           port: "8083",
           method: "GET",
         },
-        function () {},
+        () => {},
       )
       .end();
   });
@@ -252,7 +250,7 @@ describe("#createProxyServer.web() using own http server", function () {
 
     proxyServer.listen("8086");
     source.listen("8080");
-    http.request("http://127.0.0.1:8086", function () {}).end();
+    http.request("http://127.0.0.1:8086", () => {}).end();
   });
 
   it("should proxy the request and handle changeOrigin option", function (done) {
@@ -278,7 +276,7 @@ describe("#createProxyServer.web() using own http server", function () {
     proxyServer.listen("8081");
     source.listen("8080");
 
-    http.request("http://127.0.0.1:8081", function () {}).end();
+    http.request("http://127.0.0.1:8081", () => {}).end();
   });
 
   it("should proxy the request with the Authorization header set", function (done) {
@@ -305,7 +303,7 @@ describe("#createProxyServer.web() using own http server", function () {
     proxyServer.listen("8081");
     source.listen("8080");
 
-    http.request("http://127.0.0.1:8081", function () {}).end();
+    http.request("http://127.0.0.1:8081", () => {}).end();
   });
 
   it("should proxy requests to multiple servers with different options", function (done) {
@@ -349,7 +347,7 @@ describe("#createProxyServer.web() using own http server", function () {
     source1.listen("8081");
     source2.listen("8082");
 
-    http.request("http://127.0.0.1:8080/s1/test1", function () {}).end();
-    http.request("http://127.0.0.1:8080/test2", function () {}).end();
+    http.request("http://127.0.0.1:8080/s1/test1", () => {}).end();
+    http.request("http://127.0.0.1:8080/test2", () => {}).end();
   });
 });
