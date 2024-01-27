@@ -1,11 +1,11 @@
 {
   "name": "@squarecloud/http-proxy",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/squarecloudofc/http-proxy.git"
   },
-  "description": "HTTP proxying for the masses",
+  "description": "A Zero-Dependency Full-Featured HTTP and WebSocket Proxy for Node.js.",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "maintainers": [
     "João Otávio <joao@squarecloud.app>"
@@ -13,12 +13,9 @@
   "main": "index.js",
   "devDependencies": {
     "@squarecloud/eslint-config": "latest",
-    "async": "^3.2.4",
-    "concat-stream": "^2.0.0",
     "eslint": "^8.51.0",
     "expect.js": "~0.3.1",
     "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
     "sse": "^0.0.8",
