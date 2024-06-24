@@ -48,13 +48,13 @@ const proxy = createProxyServer({});
 const target = "http://example.com"; /* address of your proxy server here */
 
 const server = createServer(async (req, res) => {
-    try {
-        await proxy.web(req, res, { target });
-    } catch (error) {
-        console.error(error);
-        res.statusCode = 500;
-        res.end("Proxy error: " + error.toString());
-    }
+  try {
+    await proxy.web(req, res, { target });
+  } catch (error) {
+    console.error(error);
+    res.statusCode = 500;
+    res.end("Proxy error: " + error.toString());
+  }
 });
 
 server.listen(80, () => console.log("Proxy is listening on http://localhost"));
@@ -69,16 +69,18 @@ const { createProxyServer } = require("@squarecloud/http-proxy");
 const proxy = createProxyServer({ ws: true });
 const target = "ws://example.com"; /* address of your proxy server here */
 
-const server = createServer(async (req, res) => { /* ... */ });
+const server = createServer(async (req, res) => {
+  /* ... */
+});
 
 server.on("upgrade", async (req, socket, head) => {
-    try {
-        // use proxy.ws() instead of proxy.web() for proxying WebSocket requests.
-        await proxy.ws(req, socket, head, { target });
-    } catch (error) {
-        console.error(error);
-        socket.end();
-    }
+  try {
+    // use proxy.ws() instead of proxy.web() for proxying WebSocket requests.
+    await proxy.ws(req, socket, head, { target });
+  } catch (error) {
+    console.error(error);
+    socket.end();
+  }
 });
 
 server.listen(80, () => console.log("Proxy is listening on http://localhost"));

@@ -24,7 +24,7 @@ describe("lib/http-proxy/common.js", () => {
           method: "i",
           url: "am",
           headers: { pro: "xy", overwritten: false },
-        },
+        }
       );
 
       expect(outgoing.host).to.eql("hey");
@@ -61,7 +61,7 @@ describe("lib/http-proxy/common.js", () => {
           method: "i",
           url: "am",
           headers: { pro: "xy", overwritten: false },
-        },
+        }
       );
       expect(outgoing.headers.connection).to.eql("upgrade");
     });
@@ -84,7 +84,7 @@ describe("lib/http-proxy/common.js", () => {
           method: "i",
           url: "am",
           headers: { pro: "xy", overwritten: false },
-        },
+        }
       );
       expect(outgoing.headers.connection).to.eql("keep-alive, upgrade");
     });
@@ -108,7 +108,7 @@ describe("lib/http-proxy/common.js", () => {
           method: "i",
           url: "am",
           headers: { pro: "xy", overwritten: false },
-        },
+        }
       );
       expect(outgoing.headers.connection).to.eql("close");
     });
@@ -131,7 +131,7 @@ describe("lib/http-proxy/common.js", () => {
           method: "i",
           url: "am",
           headers: { pro: "xy", overwritten: false },
-        },
+        }
       );
       expect(outgoing.headers.connection).to.eql("close");
     });
@@ -159,7 +159,7 @@ describe("lib/http-proxy/common.js", () => {
           method: "i",
           url: "am",
           headers: { pro: "xy" },
-        },
+        }
       );
 
       expect(outgoing.host).to.eql("how");
@@ -194,7 +194,7 @@ describe("lib/http-proxy/common.js", () => {
         {
           url: "am",
         },
-        "forward",
+        "forward"
       );
 
       expect(outgoing.path).to.eql("some-path/am");
@@ -210,7 +210,7 @@ describe("lib/http-proxy/common.js", () => {
             host: "whatever.com",
           },
         },
-        { url: "/" },
+        { url: "/" }
       );
 
       expect(outgoing.port).to.eql(443);
@@ -224,7 +224,7 @@ describe("lib/http-proxy/common.js", () => {
           target: { path: "hellothere" },
           prependPath: false,
         },
-        { url: "hi" },
+        { url: "hi" }
       );
 
       expect(outgoing.path).to.eql("hi");
@@ -237,7 +237,7 @@ describe("lib/http-proxy/common.js", () => {
         {
           target: { path: "/forward" },
         },
-        { url: "/static/path" },
+        { url: "/static/path" }
       );
 
       expect(outgoing.path).to.eql("/forward/static/path");
@@ -250,7 +250,7 @@ describe("lib/http-proxy/common.js", () => {
         {
           target: { path: "/forward" },
         },
-        { url: "/?foo=bar//&target=http://foobar.com/?a=1%26b=2&other=2" },
+        { url: "/?foo=bar//&target=http://foobar.com/?a=1%26b=2&other=2" }
       );
 
       expect(outgoing.path).to.eql("/forward/?foo=bar//&target=http://foobar.com/?a=1%26b=2&other=2");
@@ -268,7 +268,7 @@ describe("lib/http-proxy/common.js", () => {
           target: new URL("http://sometarget.com:80"),
           toProxy: true,
         },
-        { url: google },
+        { url: google }
       );
 
       expect(outgoing.path).to.eql("/" + google);
@@ -283,7 +283,7 @@ describe("lib/http-proxy/common.js", () => {
           target: new URL("http://sometarget.com:80"),
           toProxy: true,
         },
-        { url: google },
+        { url: google }
       );
 
       expect(outgoing.path).to.eql("/" + google);
@@ -298,7 +298,7 @@ describe("lib/http-proxy/common.js", () => {
           target: new URL("http://sometarget.com:80"),
           toProxy: true,
         },
-        { url: google },
+        { url: google }
       );
 
       expect(outgoing.path).to.eql("/" + google);
@@ -314,7 +314,7 @@ describe("lib/http-proxy/common.js", () => {
             target: new URL(myEndpoint),
             ignorePath: true,
           },
-          { url: "/more/crazy/pathness" },
+          { url: "/more/crazy/pathness" }
         );
 
         expect(outgoing.path).to.eql("/some/crazy/path/whoooo");
@@ -330,7 +330,7 @@ describe("lib/http-proxy/common.js", () => {
             ignorePath: true,
             prependPath: false,
           },
-          { url: "/more/crazy/pathness" },
+          { url: "/more/crazy/pathness" }
         );
 
         expect(outgoing.path).to.eql("");
@@ -347,7 +347,7 @@ describe("lib/http-proxy/common.js", () => {
             target: new URL(myEndpoint),
             changeOrigin: true,
           },
-          { url: "/" },
+          { url: "/" }
         );
 
         expect(outgoing.headers.host).to.eql("mycouch.com:6984");
@@ -365,7 +365,7 @@ describe("lib/http-proxy/common.js", () => {
             },
             changeOrigin: true,
           },
-          { url: "/" },
+          { url: "/" }
         );
         expect(outgoing.headers.host).to.eql("mycouch.com:6984");
       });
@@ -394,7 +394,7 @@ describe("lib/http-proxy/common.js", () => {
         {
           method: "i",
           url: "am",
-        },
+        }
       );
 
       expect(outgoing.pfx).eql("my-pfx");
@@ -414,7 +414,7 @@ describe("lib/http-proxy/common.js", () => {
           target: new URL("https://whooooo.com"),
           method: "POST",
         },
-        { method: "GET", url: "" },
+        { method: "GET", url: "" }
       );
 
       expect(outgoing.method).eql("POST");

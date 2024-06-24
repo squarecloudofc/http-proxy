@@ -63,7 +63,7 @@ describe("lib/http-proxy.js", () => {
                 proxy.close();
                 done();
               });
-            },
+            }
           )
           .end();
       });
@@ -128,7 +128,7 @@ describe("lib/http-proxy.js", () => {
               proxy.web(req, res, {
                 target: "http://127.0.0.1:" + ports.source,
               });
-            },
+            }
           )
           .listen(ports.proxy);
 
@@ -153,7 +153,7 @@ describe("lib/http-proxy.js", () => {
                 ownServer.close();
                 done();
               });
-            },
+            }
           )
           .end();
       });

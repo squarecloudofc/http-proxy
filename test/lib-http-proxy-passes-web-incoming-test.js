@@ -152,7 +152,7 @@ describe("#createProxyServer.web() using own http server", () => {
           port: "8082",
           method: "GET",
         },
-        () => {},
+        () => {}
       )
       .end();
   });
@@ -186,7 +186,7 @@ describe("#createProxyServer.web() using own http server", () => {
           port: "8083",
           method: "GET",
         },
-        () => {},
+        () => {}
       )
       .end();
   });
@@ -220,7 +220,7 @@ describe("#createProxyServer.web() using own http server", () => {
           port: "8083",
           method: "GET",
         },
-        () => {},
+        () => {}
       )
       .end();
   });

@@ -154,7 +154,7 @@ describe("lib/http-proxy/passes/web-outgoing.js", () => {
           },
         },
         {},
-        proxyRes,
+        proxyRes
       );
 
       expect(proxyRes.headers.connection).to.eql("close");
@@ -170,7 +170,7 @@ describe("lib/http-proxy/passes/web-outgoing.js", () => {
           },
         },
         {},
-        proxyRes,
+        proxyRes
       );
 
       expect(proxyRes.headers.connection).to.eql("hey");
@@ -186,7 +186,7 @@ describe("lib/http-proxy/passes/web-outgoing.js", () => {
           },
         },
         {},
-        proxyRes,
+        proxyRes
       );
 
       expect(proxyRes.headers.connection).to.eql("hola");
@@ -202,7 +202,7 @@ describe("lib/http-proxy/passes/web-outgoing.js", () => {
           },
         },
         {},
-        proxyRes,
+        proxyRes
       );
 
       expect(proxyRes.headers.connection).to.eql("keep-alive");
@@ -218,7 +218,7 @@ describe("lib/http-proxy/passes/web-outgoing.js", () => {
           },
         },
         {},
-        proxyRes,
+        proxyRes
       );
 
       expect(proxyRes.headers.connection).to.eql(undefined);
@@ -232,7 +232,7 @@ describe("lib/http-proxy/passes/web-outgoing.js", () => {
           headers: {},
         },
         {},
-        proxyRes,
+        proxyRes
       );
 
       expect(proxyRes.headers.connection).to.eql(undefined);

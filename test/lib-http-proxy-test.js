@@ -133,7 +133,7 @@ describe("lib/http-proxy.js", () => {
               "X-Forwarded-for": "127.0.0.1",
             },
           },
-          () => {},
+          () => {}
         )
         .end();
     });
@@ -182,7 +182,7 @@ describe("lib/http-proxy.js", () => {
               proxy.close();
               done();
             });
-          },
+          }
         )
         .end();
     });
@@ -211,7 +211,7 @@ describe("lib/http-proxy.js", () => {
             port: ports.proxy,
             method: "GET",
           },
-          () => {},
+          () => {}
         )
         .end();
     });
@@ -247,7 +247,7 @@ describe("lib/http-proxy.js", () => {
           port: ports.proxy,
           method: "GET",
         },
-        () => {},
+        () => {}
       );
 
       testReq.on("error", function (e) {
